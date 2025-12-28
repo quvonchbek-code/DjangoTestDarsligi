@@ -10,8 +10,8 @@
     <ul>
         {% for post in object_list %}
         <li><h2>{{ post.title }}</h2></li>
-    </br> {{post.text}}</br>
-     <small>Mualliif<strong>{{post.author.username}}</strong></small></br></li><hr>
+    </br> <h2>{{post.text}}</h2></br>
+     <small>Mualliif <strong>{{post.author.username}}</strong></small></br></li><hr>
         {% endfor %}
     </ul>
 </body>

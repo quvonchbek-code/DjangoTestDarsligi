@@ -1,9 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse 
 from .models import Post
+from django.contrib.auth.models import User
 # Create your tests here.
 class PostMOdelTest(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='password123')
         Post.objects.create(title='Mavzu', text='yangilik matni')
 
     def test_text_content(self):
@@ -15,6 +17,7 @@ class PostMOdelTest(TestCase):
 
 class HomePageViewTest(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(username='adminuser', password='password123')
         post=Post.objects.create(title='Mavzu2', text='yangilik matni')
 
     def test_views_url_exists_at_proper_location(self):
@@ -25,3 +28,6 @@ class HomePageViewTest(TestCase):
         resp=self.client.get(reverse('home'))
         self.assertEqual(resp.status_code,200)
         self.assertTemplateUsed(resp, 'home.html')
+    def test_post_list_on_hompage(self):
+        resp = self.client.get(reverse('home'))
+        self.assertContains(resp, 'yangilik matni')
